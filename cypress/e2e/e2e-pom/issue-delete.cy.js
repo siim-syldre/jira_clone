@@ -14,6 +14,8 @@ describe('Issue delete', () => {
         deletePopup().within(() => {
           cy.contains('Delete issue').click()
         });
+
+        deletePopup().should('not.exist')
         cy.reload();
     
         backlog().should("be.visible");
@@ -22,7 +24,7 @@ describe('Issue delete', () => {
           });
       });
 
-    it.only('Issue deletion cancel', () => {
+    it('Issue deletion cancel', () => {
       getIssueDetailsModal().within(() => {
         cy.get('[data-testid="icon:trash"]').click();
       });
@@ -34,6 +36,7 @@ describe('Issue delete', () => {
         cy.get('[data-testid="icon:close"]').first().click();
       });
 
+      deletePopup().should('not.exist')
       cy.reload();
     
       backlog().should("be.visible");
@@ -41,7 +44,6 @@ describe('Issue delete', () => {
           cy.contains('This is an issue of type: Task.').should("exist");
         });
     })
-
 
       const getIssueDetailsModal = () => cy.get('[data-testid="modal:issue-details"]');
       const deletePopup = () => cy.get('[data-testid="modal:confirm"]');
